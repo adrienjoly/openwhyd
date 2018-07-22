@@ -21,3 +21,4 @@ whydJS/env-vars-local.sh
 whydJS/env-vars-perso.sh
 /scripts/mongodb-scripts/db
 /scripts/mongodb-scripts/*.gz
+/whydJS/public/vendor
