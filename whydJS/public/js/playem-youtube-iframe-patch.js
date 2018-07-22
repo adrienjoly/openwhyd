@@ -11,7 +11,7 @@ function YoutubeIframePlayer(){
 
 (function() {
 
-	var isLocal = window.location.href.indexOf("http://localhost:") == 0
+	var isLocal = true; window.location.href.indexOf("http://localhost:") == 0
 		|| /^https?\:\/\/(\w+)\.openwhyd\.(\w+)(\:8080)?\//.test(window.location.href);
 	var isPreProd = window.location.href.indexOf("//whyd.fr") != -1;
 
