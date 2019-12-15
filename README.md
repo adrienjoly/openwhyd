@@ -30,10 +30,10 @@ This is a side-project started for learning and experimentation purposes. It's w
 
 ```bash
 $ git clone https://github.com/adrienjoly/openwhyd-jekyll
-$ cd openwhyd-jekyll/whydJS/public
+$ cd openwhyd-jekyll/public
 $ bundle install
 $ bundle exec jekyll serve
-$ open http://127.0.0.1:4000
+$ open http://localhost:4000/my-openwhyd-profile-playlist.html
 ```
 
 ### Please use your own YouTube API Key 🙏
