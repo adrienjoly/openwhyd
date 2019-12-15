@@ -32,7 +32,13 @@ function YoutubeIframePlayer(){
 		this.label = "Youtube";
 		window.addEventListener('message', function(e) {
 			if (e.origin === IFRAME_HOST) {
-				var message = JSON.parse(e.data);
+				try {
+					var message = JSON.parse(e.data);
+				} catch (err) {
+					console.warn('ignoring parse error from playem-youtube-iframe-patch.js', err);
+					console.log('received payload:', e.data);
+					return;
+				}
 				var param = message.data[0];
 				that.iframeReady = true;
 		        //for (var i in message.data)
