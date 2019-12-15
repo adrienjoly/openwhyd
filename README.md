@@ -36,6 +36,13 @@ $ bundle exec jekyll serve
 $ open http://127.0.0.1:4000
 ```
 
+### Please use your own YouTube API Key 🙏
+
+1. Go to https://console.developers.google.com/projectcreate => type a name for your project => click on the "done" notification when it's shown
+2. After that, go to https://console.developers.google.com/apis/library => find "YouTube Data API v3", then click on it => click on the "activate" button
+3. Click on the "create identifier" (or "create credentials") button => pick "YouTube Data API v3" again in the dropdown list of APIs,  "Web Browser (JavaScript)", "Public data", then submit => it will provide an API key
+4. In the source code, paste that API Key as value for every definition of the `YOUTUBE_API_KEY` constant
+
 ## Support Openwhyd
 
 Openwhyd is a collaborative and open-source project.
