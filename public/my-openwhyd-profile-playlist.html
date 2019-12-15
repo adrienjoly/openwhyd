@@ -2,137 +2,135 @@
 ---
 <!DOCTYPE html>
 <html lang="en">
-    <meta charset="utf-8" />
-    <link href='//fonts.googleapis.com/css?family=Varela+Round' rel='stylesheet' type='text/css'>
-    <link href='//fonts.googleapis.com/css?family=Varela' rel='stylesheet' type='text/css'>
-    <link rel="search" type="application/opensearchdescription+xml" title="Whyd" href="http://openwhyd.org/html/opensearch.xml">
+<meta charset="utf-8" />
+<link href='//fonts.googleapis.com/css?family=Varela+Round' rel='stylesheet' type='text/css'>
+<link href='//fonts.googleapis.com/css?family=Varela' rel='stylesheet' type='text/css'>
+<link rel="search" type="application/opensearchdescription+xml" title="Whyd"
+	href="http://openwhyd.org/html/opensearch.xml">
 <script>
-  window.user = {
+	window.user = {
 		id: '4d94501d1f78ac091dbc9b4d',
 		name: 'Adrien Joly',
 		handle: 'adrien',
 		pref: { ogLik: true, ogAdd: true, ogPla: false, ogCPl: true }
 	};
-  window.playTrack = window.playTrack || function(){};
+	window.playTrack = window.playTrack || function () { };
 </script>
-<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.css" />
-    <title>Adrien Joly's tracks - Openwhyd</title>
-    <link href="/css/common.css?1.1.1" rel="stylesheet" type="text/css" />
-    <link href="/css/userProfileV2.css?1.1.1" rel="stylesheet" type="text/css" />
-    <link href="/css/userPlaylistV2.css?1.1.1" rel="stylesheet" type="text/css" />
-    <script src="/js/jquery-1.10.2.min.js"></script>
-    <script src="/js/jquery-migrate-1.2.1.js"></script>
-    <script type="text/javascript" src="/js/jquery.history.js"></script>
-    <script src="/js/soundmanager2-nodebug-jsmin.js"></script>
-    <script>soundManager.setup({url: "/swf/", flashVersion: 9, onready: function() {soundManager.isReady=true;}});</script>
-  </head>
-  <body class=" userProfileV2 userTracks ownProfile">
-<!--[if lt IE 8]>
+<link rel="stylesheet" type="text/css"
+	href="https://cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.css" />
+<title>Adrien Joly's tracks - Openwhyd</title>
+<link href="/css/common.css?1.1.1" rel="stylesheet" type="text/css" />
+<link href="/css/userProfileV2.css?1.1.1" rel="stylesheet" type="text/css" />
+<link href="/css/userPlaylistV2.css?1.1.1" rel="stylesheet" type="text/css" />
+<script src="/js/jquery-1.10.2.min.js"></script>
+<script src="/js/jquery-migrate-1.2.1.js"></script>
+<script type="text/javascript" src="/js/jquery.history.js"></script>
+<script src="/js/soundmanager2-nodebug-jsmin.js"></script>
+<script>soundManager.setup({ url: "/swf/", flashVersion: 9, onready: function () { soundManager.isReady = true; } });</script>
+</head>
+
+<body class=" userProfileV2 userTracks ownProfile">
+	<!--[if lt IE 8]>
 <div class="topWarning">Warning: your web browser is not supported by OpenWhyd. Please upgrade to a modern browser.</div>
 <![endif]-->
-<div id="contentPane">
-  <div id="mainPanel">
+	<div id="contentPane">
+		<div id="mainPanel">
+			<div class="container">
+				<div class="posts">
 
-<div class="container">
+					<!-- TRACKS TAB CONTENT -->
 
-	<section class="sub-container">
+					{% for track in site.data.tracks %}
+					<div class="post" data-pid="{{ track._id }}" data-initialpid="{{ track.repost.pId }}">
 
-		<div class="posts">
+						<div class="playBar"></div>
 
-			<!-- TRACKS TAB CONTENT -->
+						<a class="thumb" href="#" data-eid="{{ track.eId }}" onclick="return playTrack(this);"
+							style="background-image:url('{{ track.img }}');">
+							<img src="{{ track.img }}">
+							<div class="play"></div>
+						</a>
 
-			{% for track in site.data.tracks %}
-			<div class="post"
-					 data-pid="{{ track._id }}"
-					 data-initialpid="{{ track.repost.pId }}">
+						<h2>
+							<a href="#">{{ track.name }}</a>
+						</h2>
 
-				<div class="playBar"></div>
+						<p class="author">
+							<span style="background-image:url('{{ user.img }}');"></span>
+							<a href="/profile">{{ track.uNm }}</a> added this track
+							to <a href="/playlist-{{ track.pl.id }}">{{ track.pl.name }}</a>
+							via <a href="https://openwhyd.org/u/{{ track.repost.uId }}">{{ track.repost.uNm  }}</a>
+						</p>
+					</div>
+					{% endfor %}
 
-				<a class="thumb"
-					 href="#"
-					 data-eid="{{ track.eId }}"
-					 onclick="return playTrack(this);"
-					 style="background-image:url('{{ track.img }}');">
-					<img src="{{ track.img }}">
-					<div class="play"></div>
-				</a>
+				</div>
+			</div> <!-- /container -->
+		</div>
+	</div>
 
-				<h2>
-					<a href="#">{{ track.name }}</a>
-				</h2>
-
-				<p class="author">
-					<span style="background-image:url('{{ user.img }}');"></span>
-					<a href="/profile">{{ track.uNm }}</a> added this track
-					to <a href="/playlist-{{ track.pl.id }}">{{ track.pl.name }}</a>
-					via <a href="https://openwhyd.org/u/{{ track.repost.uId }}">{{ track.repost.uNm  }}</a>
-				</p>
+	<div id="playerContainer">
+		<div id="playerContainerSub">
+			<div id="playerClose" onclick="window.whydPlayer.toggleVideo();" title="Hide"></div>
+			<div id="playBtnOverlay" onclick="window.whydPlayer.playPause();"></div>
+		</div>
+	</div>
+	<div id="whydPlayer">
+		<div id="progressTrack" class="progressTrack">
+			<div id="progressBar" class="progressBar"></div>
+			<div id="progressCursor" class="progressCursor"></div>
+		</div>
+		<div class="rightButtons buttons">
+			<div id="btnShuffle" onclick="whydPlayer.toggleShuffle()" title="Shuffle mode">
+				<div></div>
 			</div>
-			{% endfor %}
-
+			<div class="volumePanel">
+				<div class="volume"></div>
+				<div id="volumeTrack" class="progressTrack">
+					<div class="progressBar"></div>
+					<div class="progressCursor"></div>
+				</div>
+			</div>
+			<div id="btnFullscreen" onclick="whydPlayer.toggleFullscreen()" title="Fullscreen">
+				<div></div>
+			</div>
 		</div>
-
-	</div>
-
-
-</section> <!-- /sub-container -->
-</div> <!-- /container -->
-
-</div>
-
-  </div>
-</div>
-<div id="playerContainer">
-	<div id="playerContainerSub">
-		<div id="playerClose" onclick="window.whydPlayer.toggleVideo();" title="Hide"></div>
-		<div id="playBtnOverlay" onclick="window.whydPlayer.playPause();"></div>
-	</div>
-</div>
-<div id="whydPlayer">
-<div id="progressTrack" class="progressTrack">
-	<div id="progressBar" class="progressBar"></div>
-	<div id="progressCursor" class="progressCursor"></div>
-</div>
-<div class="rightButtons buttons">
-	<div id="btnShuffle" onclick="whydPlayer.toggleShuffle()" title="Shuffle mode"><div></div></div>
-	<div class="volumePanel">
-		<div class="volume"></div>
-		<div id="volumeTrack" class="progressTrack">
-			<div class="progressBar"></div>
-			<div class="progressCursor"></div>
+		<div class="progressPanel buttons">
+			<button id="btnPrev" onclick="whydPlayer.prev()"></button>
+			<button id="btnPlay" onclick="whydPlayer.playPause()"></button>
+			<button id="btnNext" onclick="whydPlayer.next()"></button>
+			<button id="btnRepost" onclick="whydPlayer.repost()" title="Add">
+				<div></div>
+			</button>
+			<button id="btnLike" onclick="whydPlayer.like()" title="Like">
+				<div></div>
+			</button>
+			<button id="btnComment" onclick="whydPlayer.comment()" title="Comment">
+				<div></div>
+			</button>
+			<span id="trackTitle">(none)</span>
+			<span id="progressTimer"></span>
 		</div>
+		<div id="trackDragPos"></div>
 	</div>
-	<div id="btnFullscreen" onclick="whydPlayer.toggleFullscreen()" title="Fullscreen"><div></div></div>
-</div>
-<div class="progressPanel buttons">
-	<button id="btnPrev" onclick="whydPlayer.prev()"></button>
-	<button id="btnPlay" onclick="whydPlayer.playPause()"></button>
-	<button id="btnNext" onclick="whydPlayer.next()"></button>
-	<button id="btnRepost" onclick="whydPlayer.repost()" title="Add"><div></div></button>
-	<button id="btnLike" onclick="whydPlayer.like()" title="Like"><div></div></button>
-	<button id="btnComment" onclick="whydPlayer.comment()" title="Comment"><div></div></button>
-	<span id="trackTitle">(none)</span>
-	<span id="progressTimer"></span>
-</div>
-<div id="trackDragPos"></div>
-</div>
 
-<script>
-var DEEZER_APP_ID = 190482;
-var DEEZER_CHANNEL_URL = window.location.href.substr(0, window.location.href.indexOf("/", 10)) + "/html/channel.html";
-var SOUNDCLOUD_CLIENT_ID = "eb257e698774349c22b0b727df0238ad";
-var YOUTUBE_API_KEY = "AIzaSyCrA1RL8dJ5JPHUxj4X5L-gKP4uRHmf22I";
-var JAMENDO_CLIENT_ID = "2c9a11b9";
-</script>
-    <script src="/js/jquery.avgrund.js?1.1.1" type="text/javascript" charset="utf-8"></script>
-    <script src="/js/jquery.tipsy.js?1.1.1" type="text/javascript" charset="utf-8"></script>
-    <script src="/js/jquery.iframe-post-form.min.js?1.1.1" type="text/javascript" charset="utf-8"></script>
-    <script src="/js/jquery.placeholder.min.js?1.1.1" type="text/javascript" charset="utf-8"></script>
-    <script src="/js/jquery.elastic.js?1.1.1" type="text/javascript" charset="utf-8"></script>
-    <script src="/js/ui.js?1.1.1" type="text/javascript" charset="utf-8"></script>
-    <script src="/js/swfobject.js?1.1.1" type="text/javascript" charset="utf-8"></script>
-    <script src="/js/playem-min.js?1.1.1" type="text/javascript" charset="utf-8"></script>
-    <script src="/js/playem-youtube-iframe-patch.js?1.1.1" type="text/javascript" charset="utf-8"></script>
-    <script src="/js/whydPlayer.js?1.1.1" type="text/javascript" charset="utf-8"></script>
-  </body>
+	<script>
+		var DEEZER_APP_ID = 190482;
+		var DEEZER_CHANNEL_URL = window.location.href.substr(0, window.location.href.indexOf("/", 10)) + "/html/channel.html";
+		var SOUNDCLOUD_CLIENT_ID = "eb257e698774349c22b0b727df0238ad";
+		var YOUTUBE_API_KEY = "AIzaSyCrA1RL8dJ5JPHUxj4X5L-gKP4uRHmf22I";
+		var JAMENDO_CLIENT_ID = "2c9a11b9";
+	</script>
+	<script src="/js/jquery.avgrund.js?1.1.1" type="text/javascript" charset="utf-8"></script>
+	<script src="/js/jquery.tipsy.js?1.1.1" type="text/javascript" charset="utf-8"></script>
+	<script src="/js/jquery.iframe-post-form.min.js?1.1.1" type="text/javascript" charset="utf-8"></script>
+	<script src="/js/jquery.placeholder.min.js?1.1.1" type="text/javascript" charset="utf-8"></script>
+	<script src="/js/jquery.elastic.js?1.1.1" type="text/javascript" charset="utf-8"></script>
+	<script src="/js/ui.js?1.1.1" type="text/javascript" charset="utf-8"></script>
+	<script src="/js/swfobject.js?1.1.1" type="text/javascript" charset="utf-8"></script>
+	<script src="/js/playem-min.js?1.1.1" type="text/javascript" charset="utf-8"></script>
+	<script src="/js/playem-youtube-iframe-patch.js?1.1.1" type="text/javascript" charset="utf-8"></script>
+	<script src="/js/whydPlayer.js?1.1.1" type="text/javascript" charset="utf-8"></script>
+</body>
+
 </html>
